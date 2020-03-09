@@ -85,5 +85,18 @@ resource "aws_subnet" "privateSubnet1" {
   }
 }
 
+# create an applicaiton load balancer 
 
+resource "aws_lb" "test" {
+  name               = "test-lb-tf"
+  internal           = false
+  load_balancer_type = "application"
+  subnets            = ["${aws_subnet.public.*.id}"]
+
+  enable_deletion_protection = true
+
+  tags = {
+    Environment = "production"
+  }
+}
 
